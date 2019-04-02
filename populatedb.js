@@ -15,8 +15,8 @@ var connectMongoDb = function() {
                 return;
             }
 
-            db = dbobject;
-            dbo = dbobject.db("movies");
+            //db = dbobject;
+            dbo = dbobject;
         
             resolve();
         }); 
@@ -77,6 +77,6 @@ connectMongoDb()
     console.log("error in inserting data", e);
 })
 .then( function() {
-    db.close();
+    //db.close();
     process.exit();
 });
