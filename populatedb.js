@@ -2,6 +2,7 @@ require('dotenv').config()
 
 var mongodbClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
+var dbName = process.env.DB_NAME;
 const fs = require('fs');
 var dbFilePath = __dirname + "imdb.json";
 var dbo;
@@ -15,8 +16,8 @@ var connectMongoDb = function() {
                 return;
             }
 
-            //db = dbobject;
-            dbo = dbobject;
+            db = dbobject;
+            dbo = dbobject.db(dbName);
         
             resolve();
         }); 
@@ -77,6 +78,6 @@ connectMongoDb()
     console.log("error in inserting data", e);
 })
 .then( function() {
-    //db.close();
+    db.close();
     process.exit();
 });
