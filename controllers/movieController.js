@@ -108,7 +108,7 @@ movieController.prototype.updateMovie = function(req, res) {
                 console.log(err);
                 return;
             }
-            var response = {bSuccessful: true};
+            var response = {bSuccessful: true, find: JSON.stringify(findObj), set: JSON.stringify(changeTo)};
             res.send(JSON.stringify(response));
         });
     }
