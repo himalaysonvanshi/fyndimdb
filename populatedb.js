@@ -4,7 +4,7 @@ var mongodbClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 var dbName = process.env.DB_NAME;
 const fs = require('fs');
-var dbFilePath = __dirname + "imdb.json";
+var dbFilePath = __dirname + "/imdb.json";
 var dbo;
 var db;
 
