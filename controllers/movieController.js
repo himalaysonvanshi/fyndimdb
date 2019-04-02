@@ -81,13 +81,13 @@ movieController.prototype.updateMovie = function(req, res) {
         var movie = JSON.parse(req.body.movie);
     }
     catch(e) {
-        response = {bSuccessful : false}; 
+        response = {bSuccessful : false, err: e}; 
         res.send(JSON.stringify(response));
         return;
     }
     try {
         if(authdata.role == "moderator" && (movie.modAllowed || movie.viewerAllowed)) {
-            response = {bSuccessful : false}; 
+            response = {bSuccessful : false, err: "auth failed"}; 
             res.send(JSON.stringify(response));
             return;
         }
@@ -103,7 +103,7 @@ movieController.prototype.updateMovie = function(req, res) {
         dbo.collection('movies').updateOne(findObj, changeTo, function(err, response) {
             if(err) 
             {
-                var response = {bSuccessful: false};
+                var response = {bSuccessful: false, err: "db request failed"};
                 res.send(JSON.stringify(response));
                 console.log(err);
                 return;
