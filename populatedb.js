@@ -56,24 +56,50 @@ var readJsonFile = function() {
         catch(e) {
             reject(e);
         };
+        dbo.collection("movies").remove({}, function(err) {
+            dbo.collection("movies").insertMany(jsondata, function(err, res) {
+                if (err) { 
+                    reject(err);
+                    return;
+                }
+    
+                dbo.collection("movies").updateMany({}, { $set: {viewerAllowed : 1, modAllowed: 1 }})
+    
+                resolve();
+            });
+        });        
+    });
+ }
 
-        dbo.collection("movies").insertMany(jsondata, function(err, res) {
-            if (err) { 
-                reject(err);
-                return;
-            }
+ var insertUsers = function() {
+    return new Promise(function(resolve, reject) {
+    
+        dbo.collection("users").remove({}, function(err) {
+            dbo.collection("users").insertMany(getUsers(), function(err, res) {
+                if (err) { 
+                    reject(err);
+                    return;
+                }
 
-            dbo.collection("movies").updateMany({}, { $set: {viewerAllowed : 1, modAllowed: 1 }})
-
-            resolve();
+                resolve();
+            });
         });
     });
+ } 
+
+ var getUsers = function() {
+    return [
+        {"name" : "admin", "role" : "admin", "username" : "admin", "password": "admin" },
+        {"name" : "moderator", "role" : "moderator", "username" : "moderator", "password" : "moderator" },
+        {"name" : "viewer", "role" : "viewer", "username" : "viewer", "password" : "viewer" }
+    ]
  }
 
 connectMongoDb()
 .then(createCollection)
 .then(readJsonFile)
 .then(insertData)
+.then(insertUsers)
 .catch(function(e) {
     console.log("error in inserting data", e);
 })
