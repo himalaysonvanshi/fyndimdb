@@ -1,6 +1,7 @@
 var dbo;
 var mongodbClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
+var dbName = process.env.DB_NAME;
 
 var connectMongoDb = function() {
     return new Promise(function(resolve, reject) {
@@ -10,7 +11,7 @@ var connectMongoDb = function() {
                 return;
             }
 
-            dbo = dbobject.db("movies");
+            dbo = dbobject.db(dbName);
             resolve();
         }); 
     });

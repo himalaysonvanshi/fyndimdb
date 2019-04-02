@@ -1,6 +1,7 @@
 var mongodbClient = require('mongodb').MongoClient;
 var dbo;
 var jwt = require('jsonwebtoken');
+var dbName = process.env.DB_NAME;
 
 var connectMongoDb = function() {
     return new Promise(function(resolve, reject) {
@@ -11,7 +12,7 @@ var connectMongoDb = function() {
                 return;
             }
 
-            dbo = dbobject.db("movies");
+            dbo = dbobject.db(dbName);
             resolve();
         }); 
     });
