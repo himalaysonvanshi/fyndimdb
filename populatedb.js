@@ -9,7 +9,7 @@ var db;
 
 var connectMongoDb = function() {
     return new Promise(function(resolve, reject) {
-        mongodbClient.connect(url, function(err, dbobject) {
+        mongodbClient.connect(url, { useNewUrlParser: true }, function(err, dbobject) {
             if(err) {
                 reject(err);
                 return;
