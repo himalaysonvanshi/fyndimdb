@@ -44,18 +44,22 @@ movieController.prototype.addMovie = function(req, res) {
         res.send(JSON.stringify(response));
         return;
     }
-     
-    dbo.collection('movies').insertOne(movie, function(err, response) {
-        if(err) 
-        {
-            var response = {bSuccessful: false};
+    try {
+        dbo.collection('movies').insertOne(movie, function(err, response) {
+            if(err) 
+            {
+                var response = {bSuccessful: false};
+                res.send(JSON.stringify(response));
+                console.log(err);
+                return;
+            }
+            var response = {bSuccessful: true};
             res.send(JSON.stringify(response));
-            console.log(err);
-            return;
-        }
-        var response = {bSuccessful: true};
-        res.send(JSON.stringify(response));
-    });
+        });
+    }
+    catch(err) {
+        res.status(500).send({error: err});
+    }
 }
 
 movieController.prototype.updateMovie = function(req, res) {
