@@ -1,5 +1,7 @@
+require('dotenv').config()
+
 var mongodbClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/movies";
+var url = process.env.MONGODB_URI;
 const fs = require('fs');
 var dbFilePath = __dirname + "imdb.json";
 var dbo;

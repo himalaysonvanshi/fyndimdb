@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 var connectMongoDb = function() {
     return new Promise(function(resolve, reject) {
-        mongodbClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(err, dbobject) {
+        mongodbClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, function(err, dbobject) {
             if(err) {
                 reject(err);
                 return;
