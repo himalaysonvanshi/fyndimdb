@@ -53,7 +53,7 @@ userController.prototype.login = function(req, res) {
     
     var findObj = {username: req.body.username, password: req.body.password};  
     //var findObj = {username: req.params.username, password: req.params.password};
-
+    try {
     dbo.collection('users').findOne(findObj, function(err, output) {
         if(err || !output || output.username != findObj.username) 
         {
@@ -69,6 +69,10 @@ userController.prototype.login = function(req, res) {
         res.send(JSON.stringify(response));
         console.log("successful login", token);
     });
+}
+catch(err) {
+    res.status(500).send({error: err});
+}
 }
 
 userController.prototype.logout = function(req, res) {
