@@ -85,32 +85,36 @@ movieController.prototype.updateMovie = function(req, res) {
         res.send(JSON.stringify(response));
         return;
     }
-    
-    if(authdata.role == "moderator" && (movie.modAllowed || movie.viewerAllowed)) {
-        response = {bSuccessful : false}; 
-        res.send(JSON.stringify(response));
-        return;
-    }
-
-    var changeTo = {
-        $set: movie
-    }
-
-    var findObj = {
-        "_id": ObjectId(JSON.parse(id)) 
-    }
-    
-    dbo.collection('movies').updateOne(findObj, changeTo, function(err, response) {
-        if(err) 
-        {
-            var response = {bSuccessful: false};
+    try {
+        if(authdata.role == "moderator" && (movie.modAllowed || movie.viewerAllowed)) {
+            response = {bSuccessful : false}; 
             res.send(JSON.stringify(response));
-            console.log(err);
             return;
         }
-        var response = {bSuccessful: true};
-        res.send(JSON.stringify(response));
-    });
+
+        var changeTo = {
+            $set: movie
+        }
+
+        var findObj = {
+            "_id": ObjectId(JSON.parse(id)) 
+        }
+        
+        dbo.collection('movies').updateOne(findObj, changeTo, function(err, response) {
+            if(err) 
+            {
+                var response = {bSuccessful: false};
+                res.send(JSON.stringify(response));
+                console.log(err);
+                return;
+            }
+            var response = {bSuccessful: true};
+            res.send(JSON.stringify(response));
+        });
+    }
+    catch(err) {
+        res.status(500).send({error: err});
+    }
 }
 
 movieController.prototype.deleteMovie = function(req, res) {
