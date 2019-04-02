@@ -56,7 +56,7 @@ var readJsonFile = function() {
         catch(e) {
             reject(e);
         };
-        dbo.collection("movies").remove({}, function(err) {
+        dbo.collection("movies").deleteMany({}, function(err) {
             dbo.collection("movies").insertMany(jsondata, function(err, res) {
                 if (err) { 
                     reject(err);
@@ -74,7 +74,7 @@ var readJsonFile = function() {
  var insertUsers = function() {
     return new Promise(function(resolve, reject) {
     
-        dbo.collection("users").remove({}, function(err) {
+        dbo.collection("users").deleteMany({}, function(err) {
             dbo.collection("users").insertMany(getUsers(), function(err, res) {
                 if (err) { 
                     reject(err);
