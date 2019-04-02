@@ -16,4 +16,4 @@ var routes = require('./routes/index.js')
 
 app.use(routes(router));
 
-app.listen(process.env.SERVER_PORT);
+app.listen(process.env.PORT);
