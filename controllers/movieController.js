@@ -97,7 +97,7 @@ movieController.prototype.updateMovie = function(req, res) {
         }
 
         var findObj = {
-            "_id": ObjectId(JSON.parse(id)) 
+            "_id": ObjectId(id) 
         }
         
         dbo.collection('movies').updateOne(findObj, changeTo, function(err, response) {
